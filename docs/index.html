@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>若手エンジニアのための 1on1 セッション</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-1: #1e2746;
+            --bg-2: #3c4a7d;
+            --bg-3: #6a6cf1;
+            --bg-4: #b49afb;
+            --primary: #6a6cf1;
+            --primary-light: #8f92ff;
+            --accent: #ffd166;
+            --white: #fdfdfd;
+            --white-85: rgba(253, 253, 253, .85);
+            --white-60: rgba(253, 253, 253, .6);
+            --glass: #ffffff0f;
+            --glass-border: #ffffff22;
+            --glass-border-hover: #ffffff36;
+            --shadow-hover: 0 28px 48px rgba(0, 0, 0, .25);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--white);
+            background: linear-gradient(145deg, var(--bg-1) 0%, var(--bg-2) 25%, var(--bg-3) 60%, var(--bg-4) 100%);
+            background-size: 200% 200%;
+            animation: bgShift 25s ease infinite;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @keyframes bgShift {
+            0%,
+            100% {
+                background-position: 0 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .container {
+            max-width: 960px;
+            margin: auto;
+            padding: 2rem 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            margin-bottom: 2.2rem;
+            transition: transform .5s cubic-bezier(.16, 1, .3, 1), box-shadow .5s cubic-bezier(.16, 1, .3, 1), border-color .5s ease;
+            overflow: hidden;
+        }
+
+        .glass:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--glass-border-hover);
+        }
+
+        .inner {
+            padding: 2.3rem 2rem;
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 5.5vw, 3.6rem);
+            font-weight: 300;
+            margin-bottom: 1rem;
+            line-height: 1.15;
+        }
+
+        h2 {
+            font-size: 1.7rem;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: .8rem 0;
+        }
+
+        p {
+            font-size: 1rem;
+            color: var(--white-85);
+            margin-bottom: 1rem;
+        }
+
+        header .glass {
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--white-85);
+            margin-bottom: 1.1rem;
+        }
+
+        .hero-desc {
+            max-width: 620px;
+            margin: auto;
+        }
+
+        .sec-head {
+            display: flex;
+            gap: .7rem;
+            align-items: center;
+            margin-bottom: 1.6rem;
+        }
+
+        .num {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: .9rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .grid.two {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .card-sm {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 14px;
+            padding: 1.4rem 1.2rem;
+            transition: background .3s ease, transform .3s ease;
+        }
+
+        .card-sm:hover {
+            background: rgba(255, 255, 255, .09);
+            transform: translateY(-3px);
+        }
+
+        .dot-list li {
+            position: relative;
+            padding-left: 1.3rem;
+            margin-bottom: .55rem;
+            color: var(--white-85);
+            font-size: .94rem;
+        }
+
+        .dot-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: .42rem;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        .price {
+            background: rgba(255, 209, 102, .08);
+            border: 1px solid rgba(255, 209, 102, .25);
+            border-radius: 18px;
+            padding: 1.8rem 1.3rem;
+            text-align: center;
+            margin: 1.2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .12), transparent);
+            animation: slide 4s infinite;
+        }
+
+        @keyframes slide {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .amt {
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: #ffd166;
+            margin-bottom: .5rem;
+        }
+
+        .cta {
+            padding: 3.3rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(106, 108, 241, .15), rgba(251, 191, 36, .15));
+        }
+
+        .cta-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        .btns {
+            display: flex;
+            gap: .7rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.6rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .7rem 1.4rem;
+            border-radius: 10px;
+            font-size: .93rem;
+            font-weight: 500;
+            color: var(--white);
+            text-decoration: none;
+            transition: transform .4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            box-shadow: 0 6px 14px rgba(0, 0, 0, .25);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .fade {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .fade.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (max-width: 750px) {
+            .grid.two {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .sec-head {
+                flex-direction: column;
+                gap: .4rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="noise-overlay"></div>
+
+    <!-- Hero Header -->
+    <header>
+        <div class="container">
+            <div class="glass fade">
+                <h1>若手エンジニアのための<br>1on1 セッション</h1>
+                <p class="subtitle">考えを、言葉に。問いを、未来へ。</p>
+                <p class="hero-desc">ひとりで抱えている想いを、安心できる空間で言葉にしてみませんか？</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+
+            <!-- 01 Intro -->
+            <section class="glass fade" aria-labelledby="intro">
+                <div class="inner">
+                    <div class="sec-head"><span class="num">01</span>
+                        <h2 id="intro">「なんとなく詰まっている」そんなときの、安心して話せる60分。</h2>
+                    </div>
+                    <p>こんにちは、さいじょうです。フリーランスのソフトウェアエンジニアとして10年以上、Web開発やチームづくりに携わってきました。Go、React、gRPCを扱いながらスクラムマスターとしても活動し、技術と人の両面からプロダクトを支えてきました。</p>
+                    <p>でも、今回ご案内するのはコードの話ではなく<strong>「あなた自身の思考」に向き合う1on1</strong>です。</p>
+                </div>
+            </section>
+
+            <!-- 02 Reason -->
+            <section class="glass fade" aria-labelledby="reason">
+                <div class="inner">
+                    <div class="sec-head"><span class="num">02</span>
+                        <h2 id="reason">このセッションが生まれたきっかけ</h2>
+                    </div>
+                    <p>以前スクラムマスターを務めていた頃、1on1のホストとゲストの両方を経験しました。ゲストとして話すと頭の中が整理され、新しい視点を得られる。ホストとして聴くと「気づきがあった」と喜んでもらえる――そんな体験から<strong>“対話の場”の力</strong>を実感しました。</p>
+                    <p style="font-style: italic; color: var(--white-85);">答えはすでにあなたの中にあります。必要なのは、それを話せる安全な場所と、一緒に探す伴走者だけ。</p>
+                    <p>このセッションは、その場所になりたいという思いから生まれました。</p>
+                </div>
+            </section>
+
+            <!-- 03 What we do / don’t -->
+            <section class="glass fade" aria-labelledby="what">
+                <div class="inner">
+                    <div class="sec-head"><span class="num">03</span>
+                        <h2 id="what">このセッションで大切にしていること</h2>
+                    </div>
+                    <div class="grid two">
+                        <div class="card-sm">
+                            <h3>一緒に育むもの</h3>
+                            <ul class="dot-list">
+                                <li>あなたの想いを言葉にする時間</li>
+                                <li>心の奥にある本当の気持ちとの対話</li>
+                                <li>あなた自身が見つける問いと答え</li>
+                                <li>未来への希望と具体的な一歩</li>
+                            </ul>
+                        </div>
+                        <div class="card-sm">
+                            <h3>やらないこと</h3>
+                            <ul class="dot-list">
+                                <li>コードレビューや技術的指導</li>
+                                <li>一方的なアドバイスの提供</li>
+                                <li>正解を押し付けること</li>
+                                <li>評価や判断をすること</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 04 Format -->
+            <section class="glass fade" aria-labelledby="format">
+                <div class="inner">
+                    <div class="sec-head"><span class="num">04</span>
+                        <h2 id="format">セッションの形式</h2>
+                    </div>
+                    <div class="price" style="background: none; border: none; padding: 0;">
+                        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));">
+                            <div>
+                                <h3 style="margin: 0; font-size: 1.6rem; font-weight: 300;">60</h3>
+                                <p style="margin: 0; font-size: .8rem; color: var(--white-60);">分</p>
+                            </div>
+                            <div>
+                                <h3 style="margin: 0; font-size: 1.6rem; font-weight: 300;">隔週</h3>
+                                <p style="margin: 0; font-size: .8rem; color: var(--white-60);">ペース</p>
+                            </div>
+                            <div>
+                                <h3 style="margin: 0; font-size: 1.6rem; font-weight: 300;">6</h3>
+                                <p style="margin: 0; font-size: .8rem; color: var(--white-60);">回</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p>完全個別オンラインで、あなたのペースを尊重しつつ対話を重ねます。セッション間の2週間は、気づきを咀嚼し自分のものにする期間です。</p>
+                </div>
+            </section>
+
+            <!-- 05 Pricing -->
+            <section class="glass fade" aria-labelledby="price">
+                <div class="inner">
+                    <div class="sec-head"><span class="num">05</span>
+                        <h2 id="price">お気持ちに寄り添う料金システム</h2>
+                    </div>
+                    <div class="price">
+                        <div class="amt">最低 500円〜</div>
+                        <p>Pay What You Want 方式</p>
+                    </div>
+                    <p>毎回セッション後に「その金額を選んだ理由」をフィードバックとして伺います。経済的な不安を気にせず、必要なタイミングでご利用ください。</p>
+                </div>
+            </section>
+
+            <!-- 06 Benefits -->
+            <section class="glass fade" aria-labelledby="benefits">
+                <div class="inner">
+                    <div class="sec-head"><span class="num">06</span>
+                        <h2 id="benefits">セッションを通じて期待できる変化</h2>
+                    </div>
+                    <div class="grid">
+                        <div class="card-sm">
+                            <h3>心の整理ができる</h3>
+                            <p>言葉にすることで、モヤモヤした想いがクリアになります。</p>
+                        </div>
+                        <div class="card-sm">
+                            <h3>自分への理解が深まる</h3>
+                            <p>本当に大切にしたい価値観や強みを再発見できます。</p>
+                        </div>
+                        <div class="card-sm">
+                            <h3>選択への確信が生まれる</h3>
+                            <p>迷いから抜け出し、自信を持って次の一歩を踏み出せます。</p>
+                        </div>
+                        <div class="card-sm">
+                            <h3>継続的な成長習慣</h3>
+                            <p>自分で問いを立てて答えを見つける力が養われます。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 07 Personal Motivation -->
+            <section class="glass fade" aria-labelledby="motivation">
+                <div class="inner">
+                    <div class="sec-head"><span class="num">07</span>
+                        <h2 id="motivation">わたしにとっての、この取り組み</h2>
+                    </div>
+                    <p>これは僕にとって、ただのサービスではなく、自分自身の対話スキルを磨く“実践の場”です。</p>
+                    <p>でも、“練習だから”といって適当にやるつもりはありません。むしろ、うまくできるか不安だからこそ、1回1回の対話に誠実に向き合いたい。あなたの話を、あなたの言葉として、しっかり聴きたいと思っています。</p>
+                </div>
+            </section>
+
+            <!-- 08 Final Message -->
+            <section class="glass fade" aria-labelledby="final">
+                <div class="inner">
+                    <div class="sec-head"><span class="num">08</span>
+                        <h2 id="final">最後に</h2>
+                    </div>
+                    <p>この時間は、整っていないあなたを歓迎します。頭の中が整理されていなくても、言葉が詰まっても、それでいい。この時間の中で、ゆっくり考えて、少しずつ言葉にしていきましょう。</p>
+                    <p>「なんか話したいかも」「ちゃんと考える時間がほしい」そんなふうに思ったら、ぜひ一度、ご連絡ください。あなたの問いに、真剣に耳を傾けます。</p>
+                </div>
+            </section>
+
+            <!-- 09 Call to Action -->
+            <section class="glass cta fade" aria-labelledby="cta">
+                <div class="cta-inner">
+                    <div class="sec-head" style="justify-content: center;"><span class="num">09</span>
+                        <h2 id="cta">あなたの声を、聞かせてください</h2>
+                    </div>
+                    <p>今日という日から、新しい物語を始めませんか？<br>一歩踏み出す勇気を、私が支えます。</p>
+                    <div class="btns">
+                        <a class="btn btn-primary" href="https://x.com/saijo_shota">🐦 X (DM歓迎)</a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="fade">
+        <div class="container">
+            <p style="font-size: .85rem; color: var(--white-60);">&copy; 2025 saijo.shota - あなたの歩みを応援しています</p>
+        </div>
+    </footer>
+
+    <!-- IntersectionObserver Fade-In -->
+    <script>
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade').forEach(el => io.observe(el));
+    </script>
+</body>
+
+</html>
